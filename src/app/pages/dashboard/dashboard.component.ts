@@ -53,15 +53,13 @@ export class DashboardComponent {
     async getCovidTodayCaseByProvince() {
         try {
             var res: any = await this.covidService.getCovidToDayCaseByProvince();
-            var covidData;
+            var covidData: any;
 
             res.forEach((v: any) => {
                 if (v.province === "สุราษฎร์ธานี") {
                     covidData = v;
                 }
             });
-
-            console.log(covidData);
 
             this.snewCase = covidData.new_case || 0;
             this.snewDeath = covidData.new_death || 0;
