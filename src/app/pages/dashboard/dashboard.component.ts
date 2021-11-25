@@ -14,31 +14,26 @@ export class DashboardComponent {
     totalDeath = 0;
     newRecovered = 0;
     totalRecovered = 0;
+
+    snewCase = 0;
+    stotalCase = 0;
+    snewDeath = 0;
+    stotalDeath = 0;
+    snewRecovered = 0;
+    stotalRecovered = 0;
+
     covidLastUpdateDate = "";
 
     constructor (private covidService: CovidService) { }
 
     ngOnInit() {
         this.getCovidTodayCase();
+        this.getCovidTodayCaseByProvince();
     }
 
     async getCovidTodayCase() {
         try {
             var res: any = await this.covidService.getCovidToDayCase();
-            /*
-                 {
-                     "txn_date": "2021-11-25",
-                     "new_case": 6335,
-                     "total_case": 2088327,
-                     "new_case_excludeabroad": 6328,
-                     "total_case_excludeabroad": 2081586,
-                     "new_death": 37,
-                     "total_death": 20581,
-                     "new_recovered": 7218,
-                     "total_recovered": 1987308,
-                     "update_date": "2021-11-25 07:32:25"
-                 }
-            */
             var covidData = res[0];
 
             this.newCase = covidData.new_case || 0;
@@ -50,6 +45,28 @@ export class DashboardComponent {
             this.covidLastUpdateDate = covidData.update_date;
 
             console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getCovidTodayCaseByProvince() {
+        try {
+            var res: any = await this.covidService.getCovidToDayCaseByProvince();
+            var covidData = res.map((v: any) => {
+                if (v.province === "สุราษฎร์ธานี") {
+                    return v;
+                }
+            });
+
+            console.log(covidData);
+
+            this.snewCase = covidData.new_case || 0;
+            this.snewDeath = covidData.new_death || 0;
+            this.stotalCase = covidData.total_case || 0;
+            this.stotalDeath = covidData.total_death || 0;
+            this.snewRecovered = covidData.new_recovered || 0;
+            this.stotalRecovered = covidData.total_recovered || 0;
         } catch (error) {
             console.log(error);
         }
