@@ -32,7 +32,7 @@ export class DashboardComponent {
     reportDate: any = "";
 
     constructor (private covidService: CovidService) {
-        var date = `${moment().format("D MMM")} ${moment().get("year") + 543}`;
+        var date = `${moment().subtract(1, "day").locale("th").format("D MMM")} ${moment().get("year") + 543}`;
         this.reportDate = date;
     }
 
