@@ -24,11 +24,29 @@ export class DashboardComponent {
 
     covidLastUpdateDate = "";
 
+    totalToday: any = {};
+
+    isLoading = false;
+
     constructor (private covidService: CovidService) { }
 
     ngOnInit() {
         this.getCovidTodayCase();
         this.getCovidTodayCaseByProvince();
+        this.getCovidToday();
+    }
+
+    async getCovidToday() {
+        this.isLoading = true;
+        try {
+            var res: any = await this.covidService.getCovidToDay();
+            this.isLoading = false;
+            var data: any = res.rows[0];
+            this.totalToday = data;
+        } catch (error) {
+            this.isLoading = false;
+            console.log(error);
+        }
     }
 
     async getCovidTodayCase() {

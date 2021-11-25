@@ -18,4 +18,9 @@ export class CovidService {
     return await this.http.get(url).toPromise();
   }
 
+  async getCovidToDay() {
+    var url = "https://0627-125-26-19-112.ngrok.io/mophic/dashboard/target/current";
+    return await this.http.get(url).toPromise();
+  }
+
 }
