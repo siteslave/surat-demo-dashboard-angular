@@ -33,6 +33,7 @@ import { MenuItemComponent } from './components/menu-item/menu-item.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { DropdownMenuComponent } from './components/dropdown/dropdown-menu/dropdown-menu.component';
 import { CovidService } from './services/covid.service';
+import { ChartModule } from 'angular-highcharts';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -68,6 +69,7 @@ registerLocaleData(localeEn, 'en-EN');
         AppRoutingModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
+        ChartModule,
         ToastrModule.forRoot({
             timeOut: 3000,
             positionClass: 'toast-top-right',

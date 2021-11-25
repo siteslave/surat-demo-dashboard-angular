@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import moment from 'moment';
-import { CovidService } from '../../services/covid.service';
+import * as Highcharts from 'highcharts';
 
+import { CovidService } from '../../services/covid.service';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -31,15 +32,49 @@ export class DashboardComponent {
 
     reportDate: any = "";
 
+    options: any;
+
     constructor (private covidService: CovidService) {
         var date = `${moment().subtract(1, "day").locale("th").format("dddd D MMM")} ${moment().get("year") + 543}`;
         this.reportDate = date;
+
     }
 
     ngOnInit() {
         this.getCovidTodayCase();
         this.getCovidTodayCaseByProvince();
         this.getCovidToday();
+
+
+        this.options = {
+            chart: {
+                type: 'column',
+                // height: 200
+            },
+            title: {
+                text: 'xxxxxxx'
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                categories: [
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr'
+                ],
+                crosshair: true
+            },
+            series: [
+                {
+                    name: 'Line 1',
+                    data: [10, 50, 30, 100]
+                }
+            ]
+        };
+
+        Highcharts.chart('chart-608', this.options);
     }
 
     async getCovidToday() {
