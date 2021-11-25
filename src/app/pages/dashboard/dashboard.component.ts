@@ -57,6 +57,16 @@ export class DashboardComponent {
             credits: {
                 enabled: false
             },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function () {
+                            return this.y + '%'
+                        }
+                    }
+                }
+            },
             xAxis: {
                 categories: [
                     'Jan',
