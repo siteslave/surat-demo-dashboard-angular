@@ -173,7 +173,8 @@
                             <td>{{totalToday.t608_no3 | number}}</td>
                             <td>{{totalToday.t608 | number}}</td>
                             <td style="text-align: center;"><span
-                                    class="badge bg-danger">{{totalToday.result_608 | number: '1.2-2'}}%</span></td>
+                                    [ngClass]="{'badge bg-danger': totalToday.result_608< 50, 'badge bg-success':  totalToday.result_608 >= 50}">{{totalToday.result_608 | number: '1.2-2'}}%</span>
+                            </td>
                         </tr>
                         <tr>
                             <td>ประชาชนทั่วไป</td>
@@ -182,7 +183,8 @@
                             <td>{{totalToday.t501_no3 | number}}</td>
                             <td>{{totalToday.t501 | number}}</td>
                             <td style="text-align: center;"><span
-                                    class="badge bg-danger">{{totalToday.result_501 | number: '1.2-2'}}%</span></td>
+                                    [ngClass]="{'badge bg-danger': totalToday.result_501< 50, 'badge bg-success':  totalToday.result_501 >= 50}">{{totalToday.result_501 | number: '1.2-2'}}%</span>
+                            </td>
                         </tr>
                         <tr>
                             <td>นักเรียน</td>
@@ -191,7 +193,8 @@
                             <td>{{totalToday.t502_no3 | number}}</td>
                             <td>{{totalToday.t502 | number}}</td>
                             <td style="text-align: center;"><span
-                                    class="badge bg-danger">{{totalToday.result_502 | number: '1.2-2'}}%</span></td>
+                                    [ngClass]="{'badge bg-danger': totalToday.result_502< 50, 'badge bg-success':  totalToday.result_502 >= 50}">{{totalToday.result_502 | number: '1.2-2'}}%</span>
+                            </td>
                         </tr>
 
                     </tbody>
