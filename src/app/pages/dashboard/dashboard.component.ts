@@ -53,9 +53,11 @@ export class DashboardComponent {
     async getCovidTodayCaseByProvince() {
         try {
             var res: any = await this.covidService.getCovidToDayCaseByProvince();
-            var covidData = res.map((v: any) => {
+            var covidData;
+
+            res.forEach((v: any) => {
                 if (v.province === "สุราษฎร์ธานี") {
-                    return v;
+                    covidData = v;
                 }
             });
 
