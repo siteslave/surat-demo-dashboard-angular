@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import moment from 'moment';
+import * as numeral from 'numeral';
 import * as Highcharts from 'highcharts';
 
 import { CovidService } from '../../services/covid.service';
@@ -88,10 +89,13 @@ export class DashboardComponent {
                 },
                 plotOptions: {
                     series: {
+                        tooltip: {
+                            pointFormatter: function () { return numeral(this.y).format('0,0') + '%'; }
+                        },
                         dataLabels: {
                             enabled: true,
                             formatter: function () {
-                                return this.y + '%'
+                                return numeral(this.y).format('0,0') + '%'
                             }
                         }
                     }
@@ -108,7 +112,11 @@ export class DashboardComponent {
                 ]
             };
 
-            Highcharts.chart('chart-608', this.options);
+            Highcharts.chart('chart-608', this.options).yAxis[0].addPlotLine({
+                value: 95,
+                color: 'red',
+                width: 3
+            });
 
         } catch (error) {
             console.log(error);
