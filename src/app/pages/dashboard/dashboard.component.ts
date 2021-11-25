@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import moment from 'moment';
 import { CovidService } from '../../services/covid.service';
 
 @Component({
@@ -28,7 +29,12 @@ export class DashboardComponent {
 
     isLoading = false;
 
-    constructor (private covidService: CovidService) { }
+    reportDate: any = "";
+
+    constructor (private covidService: CovidService) {
+        var date = `${moment().format("D MMM")} ${moment().get("year") + 543}`;
+        this.reportDate = date;
+    }
 
     ngOnInit() {
         this.getCovidTodayCase();
