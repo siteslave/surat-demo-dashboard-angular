@@ -19,7 +19,12 @@ export class CovidService {
   }
 
   async getCovidToDay() {
-    var url = "https://0627-125-26-19-112.ngrok.io/mophic/dashboard/target/current";
+    var url = "http://92bb-125-26-19-112.ngrok.io/mophic/dashboard/target/current";
+    return await this.http.get(url).toPromise();
+  }
+
+  async getChartTarget608() {
+    var url = "http://92bb-125-26-19-112.ngrok.io/mophic/dashboard/chart/608";
     return await this.http.get(url).toPromise();
   }
 

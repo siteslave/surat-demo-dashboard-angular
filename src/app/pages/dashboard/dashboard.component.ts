@@ -45,47 +45,9 @@ export class DashboardComponent {
         this.getCovidTodayCaseByProvince();
         this.getCovidToday();
 
-
-        this.options = {
-            chart: {
-                type: 'column',
-                // height: 200
-            },
-            title: {
-                text: 'xxxxxxx'
-            },
-            credits: {
-                enabled: false
-            },
-            plotOptions: {
-                series: {
-                    dataLabels: {
-                        enabled: true,
-                        formatter: function () {
-                            return this.y + '%'
-                        }
-                    }
-                }
-            },
-            xAxis: {
-                categories: [
-                    'Jan',
-                    'Feb',
-                    'Mar',
-                    'Apr'
-                ],
-                crosshair: true
-            },
-            series: [
-                {
-                    name: 'Line 1',
-                    data: [10, 50, 30, 100]
-                }
-            ]
-        };
-
-        Highcharts.chart('chart-608', this.options);
+        this.getChartTarget608();
     }
+
 
     async getCovidToday() {
         this.isLoading = true;
@@ -96,6 +58,59 @@ export class DashboardComponent {
             this.totalToday = data;
         } catch (error) {
             this.isLoading = false;
+            console.log(error);
+        }
+    }
+
+    async getChartTarget608() {
+        try {
+            var res: any = await this.covidService.getChartTarget608();
+            var chartData: any = res.rows[0];
+
+            var categories: any = [];
+            var data: any = [];
+
+            chartData.forEach((v: any) => {
+                categories.push(v.amphur_name);
+                data.push(+v.result_608);
+            });
+
+            this.options = {
+                chart: {
+                    type: 'column',
+                    // height: 200
+                },
+                title: {
+                    text: 'ผลงานการฉีดเข็ม 1 กลุ่ม 608'
+                },
+                credits: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        dataLabels: {
+                            enabled: true,
+                            formatter: function () {
+                                return this.y + '%'
+                            }
+                        }
+                    }
+                },
+                xAxis: {
+                    categories: categories,
+                    crosshair: true
+                },
+                series: [
+                    {
+                        name: 'ร้อยละ',
+                        data: data
+                    }
+                ]
+            };
+
+            Highcharts.chart('chart-608', this.options);
+
+        } catch (error) {
             console.log(error);
         }
     }
