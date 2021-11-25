@@ -65,7 +65,7 @@ export class DashboardComponent {
     async getChartTarget608() {
         try {
             var res: any = await this.covidService.getChartTarget608();
-            var chartData: any = res.rows[0];
+            var chartData: any = res.rows;
 
             var categories: any = [];
             var data: any = [];
