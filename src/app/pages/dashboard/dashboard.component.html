@@ -168,27 +168,30 @@
                     <tbody>
                         <tr>
                             <td>กลุ่ม 608</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td style="text-align: center;"><span class="badge bg-danger">55%</span></td>
+                            <td>{{totalToday.t608_no1 | number}}</td>
+                            <td>{{totalToday.t608_no2 | number}}</td>
+                            <td>{{totalToday.t608_no3 | number}}</td>
+                            <td>{{totalToday.t608 | number}}</td>
+                            <td style="text-align: center;"><span
+                                    class="badge bg-danger">{{totalToday.result_608 | number: '1.2-2'}}%</span></td>
                         </tr>
                         <tr>
                             <td>ประชาชนทั่วไป</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td style="text-align: center;"><span class="badge bg-danger">55%</span></td>
+                            <td>{{totalToday.t501_no1 | number}}</td>
+                            <td>{{totalToday.t501_no2 | number}}</td>
+                            <td>{{totalToday.t501_no3 | number}}</td>
+                            <td>{{totalToday.t501 | number}}</td>
+                            <td style="text-align: center;"><span
+                                    class="badge bg-danger">{{totalToday.result_501 | number: '1.2-2'}}%</span></td>
                         </tr>
                         <tr>
                             <td>นักเรียน</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td style="text-align: center;"><span class="badge bg-danger">55%</span></td>
+                            <td>{{totalToday.t502_no1 | number}}</td>
+                            <td>{{totalToday.t502_no2 | number}}</td>
+                            <td>{{totalToday.t502_no3 | number}}</td>
+                            <td>{{totalToday.t502 | number}}</td>
+                            <td style="text-align: center;"><span
+                                    class="badge bg-danger">{{totalToday.result_502 | number: '1.2-2'}}%</span></td>
                         </tr>
 
                     </tbody>
