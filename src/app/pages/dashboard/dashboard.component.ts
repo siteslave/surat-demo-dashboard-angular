@@ -201,7 +201,7 @@ export class DashboardComponent {
                     dataLabels: {
                         enabled: true
                     },
-                    enableMouseTracking: false
+                    enableMouseTracking: true
                 }
             },
             yAxis: {
