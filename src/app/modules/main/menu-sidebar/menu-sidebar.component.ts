@@ -9,40 +9,58 @@ import { AppService } from '@services/app.service';
 })
 export class MenuSidebarComponent implements OnInit {
     public user: any = {};
-    public menu = MENU;
+    public menuAdmin: any;
+    public menuUser: any;
+
+    isAdmin = false;
 
     constructor (public appService: AppService) { }
 
     ngOnInit() {
         const helper = new JwtHelperService();
         const token = localStorage.getItem("token")
-        const decodedToken = helper.decodeToken(token);
 
-        this.user.name = decodedToken.name;
+        if (token) {
+            // expired
+            const isExpired = helper.isTokenExpired(token);
+            if (isExpired) {
+                this.isAdmin = false;
+            } else {
+                this.isAdmin = true;
+                const decodedToken = helper.decodeToken(token);
+                this.user.name = decodedToken.name;
+            }
+        } else {
+            this.isAdmin = false;
+        }
+
+        this.menuAdmin = [
+            {
+                name: 'Dashboard',
+                path: ['/'],
+            },
+            {
+                name: 'Admin menu',
+                children: [
+                    {
+                        name: 'Sub Menu',
+                        path: ['/sub-menu-1'],
+                    },
+
+                    {
+                        name: 'Blank',
+                        path: ['/sub-menu-2'],
+                    }
+                ]
+            }
+        ];
+
+        this.menuUser = [
+            {
+                name: 'Login',
+                path: ['/login'],
+            }
+        ];
+
     }
 }
-
-export const MENU = [
-    {
-        name: 'Dashboard',
-        path: ['/']
-    },
-    {
-        name: 'Blank',
-        path: ['/blank']
-    },
-    {
-        name: 'Main Menu',
-        children: [
-            {
-                name: 'Sub Menu',
-                path: ['/sub-menu-1']
-            },
-
-            {
-                name: 'Blank',
-                path: ['/sub-menu-2']
-            }
-        ]
-    }
-];

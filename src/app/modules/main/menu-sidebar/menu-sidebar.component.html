@@ -8,7 +8,7 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <!-- Sidebar user (optional) -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <div *ngIf="isAdmin" class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
             <img src='assets/img/default-profile.png' class="img-circle elevation-2" alt="User Image" />
         </div>
@@ -21,8 +21,13 @@
 
     <!-- Sidebar Menu -->
     <nav class="mt-2" style="overflow-y: hidden">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <app-menu-item *ngFor="let item of menu" [menuItem]="item"></app-menu-item>
+        <ul *ngIf="isAdmin" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <app-menu-item *ngFor="let item of menuAdmin" [menuItem]="item"></app-menu-item>
+        </ul>
+        <ul *ngIf="!isAdmin" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <app-menu-item *ngFor="let item of menuUser" [menuItem]="item"></app-menu-item>
         </ul>
     </nav>
 </div>
