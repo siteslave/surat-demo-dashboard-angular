@@ -5,9 +5,9 @@ import {
     OnDestroy,
     HostBinding
 } from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {AppService} from '@services/app.service';
-import {ToastrService} from 'ngx-toastr';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AppService } from '@services/app.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-register',
@@ -22,11 +22,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
     public isGoogleLoading = false;
     public isFacebookLoading = false;
 
-    constructor(
+    constructor (
         private renderer: Renderer2,
         private toastr: ToastrService,
         private appService: AppService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.renderer.addClass(
@@ -36,17 +36,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.registerForm = new FormGroup({
             email: new FormControl(null, Validators.required),
             password: new FormControl(null, [Validators.required]),
-            retypePassword: new FormControl(null, [Validators.required])
+            firstName: new FormControl(null, [Validators.required]),
+            lastName: new FormControl(null, [Validators.required]),
         });
     }
 
     async registerByAuth() {
         if (this.registerForm.valid) {
             this.isAuthLoading = true;
-            await this.appService.registerByAuth(this.registerForm.value);
+            console.log(this.registerForm.value);
+            // await this.appService.registerByAuth(this.registerForm.value);
             this.isAuthLoading = false;
         } else {
-            this.toastr.error('Form is not valid!');
+            this.toastr.error('กรุณากรอกข้อมูลให้ถูกต้อง!');
         }
     }
 
