@@ -6,6 +6,7 @@ import {
     HostBinding
 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AppService } from '@services/app.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -25,7 +26,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     constructor (
         private renderer: Renderer2,
         private toastr: ToastrService,
-        private appService: AppService
+        private appService: AppService,
+        private router: Router,
     ) { }
 
     ngOnInit() {
@@ -45,8 +47,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
         if (this.registerForm.valid) {
             this.isAuthLoading = true;
             console.log(this.registerForm.value);
-            // await this.appService.registerByAuth(this.registerForm.value);
+            var res: any = await this.appService.registerByAuth(this.registerForm.value);
             this.isAuthLoading = false;
+            if (res.ok) {
+                localStorage.setItem('token', res.token);
+                this.router.navigate(['/']);
+            }
+
         } else {
             this.toastr.error('กรุณากรอกข้อมูลให้ถูกต้อง!');
         }
