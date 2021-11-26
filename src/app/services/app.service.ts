@@ -18,7 +18,7 @@ export class AppService {
 
     async loginByAuth({ email, password }) {
         try {
-            const url: any = "https://d3b0-125-26-19-112.ngrok.io/login";
+            const url: any = "http://localhost:3000/login";
             return await this.http.post(url, { email, password }).toPromise();
         } catch (error) {
             this.toastr.error(error.message);
