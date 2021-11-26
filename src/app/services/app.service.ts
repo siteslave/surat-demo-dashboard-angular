@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Gatekeeper } from 'gatekeeper-client-sdk';
@@ -14,11 +14,12 @@ export class AppService {
         private router: Router,
         private toastr: ToastrService,
         private http: HttpClient,
+        @Inject("API_URL") private apiUrl: any
     ) { }
 
     async loginByAuth({ email, password }) {
         try {
-            const url: any = "http://localhost:3000/login";
+            const url: any = `${this.apiUrl}/login`;
             return await this.http.post(url, { email, password }).toPromise();
         } catch (error) {
             this.toastr.error(error.message);
@@ -26,7 +27,7 @@ export class AppService {
     }
 
     async registerByAuth(user: any) {
-        const url: any = "https://d3b0-125-26-19-112.ngrok.io/users";
+        const url: any = `${this.apiUrl}/users`;
         return await this.http.post(url, user).toPromise();
     }
 

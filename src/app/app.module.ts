@@ -20,7 +20,7 @@ import { MessagesComponent } from '@modules/main/header/messages/messages.compon
 import { NotificationsComponent } from '@modules/main/header/notifications/notifications.component';
 import { ButtonComponent } from './components/button/button.component';
 
-import { registerLocaleData } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import { UserComponent } from '@modules/main/header/user/user.component';
 import { ForgotPasswordComponent } from '@modules/forgot-password/forgot-password.component';
@@ -35,6 +35,7 @@ import { DropdownMenuComponent } from './components/dropdown/dropdown-menu/dropd
 import { CovidService } from './services/covid.service';
 import { ChartModule } from 'angular-highcharts';
 import { UserLayoutComponent } from './modules/user-layout/user-layout.component';
+import { environment } from '../environments/environment';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -78,7 +79,11 @@ registerLocaleData(localeEn, 'en-EN');
             preventDuplicates: true
         })
     ],
-    providers: [CovidService],
+    providers: [
+        CovidService,
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
+        { provide: 'API_URL', useValue: environment.apiUrl },
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
