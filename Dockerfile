@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:lts-alpine3.14
 
 LABEL maintainer="Satit Rianpit <rianpit@gmail.com>"
 
