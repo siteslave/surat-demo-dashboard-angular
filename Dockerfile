@@ -10,6 +10,8 @@ COPY . .
 
 RUN npm i
 
+RUN npm i -g @angular/cli
+
 RUN npm run build
 
 RUN npm i express
