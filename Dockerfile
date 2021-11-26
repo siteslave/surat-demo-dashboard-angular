@@ -4,7 +4,7 @@ LABEL maintainer="Satit Rianpit <rianpit@gmail.com>"
 
 WORKDIR /home/app
 
-RUN apk add --upgrade --no-cache --virtual deps python build-base git
+RUN apk add --upgrade --no-cache --virtual deps python3 build-base git
 
 COPY . .
 
