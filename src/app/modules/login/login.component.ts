@@ -5,9 +5,10 @@ import {
     Renderer2,
     HostBinding
 } from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {ToastrService} from 'ngx-toastr';
-import {AppService} from '@services/app.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { AppService } from '@services/app.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -21,11 +22,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     public isGoogleLoading = false;
     public isFacebookLoading = false;
 
-    constructor(
+    constructor (
         private renderer: Renderer2,
         private toastr: ToastrService,
-        private appService: AppService
-    ) {}
+        private appService: AppService,
+        private router: Router,
+    ) { }
 
     ngOnInit() {
         this.renderer.addClass(
@@ -41,8 +43,16 @@ export class LoginComponent implements OnInit, OnDestroy {
     async loginByAuth() {
         if (this.loginForm.valid) {
             this.isAuthLoading = true;
-            await this.appService.loginByAuth(this.loginForm.value);
+            var res: any = await this.appService.loginByAuth(this.loginForm.value);
             this.isAuthLoading = false;
+
+            if (res.ok) {
+                localStorage.setItem('token', res.token);
+                this.router.navigate(['/']);
+            } else {
+                this.toastr.error("ไม่สามารถลงทะเบียนได้");
+            }
+
         } else {
             this.toastr.error('Form is not valid!');
         }

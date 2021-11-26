@@ -52,6 +52,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
             if (res.ok) {
                 localStorage.setItem('token', res.token);
                 this.router.navigate(['/']);
+            } else {
+                this.toastr.error("ไม่สามารถลงทะเบียนได้");
             }
 
         } else {

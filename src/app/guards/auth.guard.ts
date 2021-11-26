@@ -1,4 +1,6 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import { JwtHelperService } from "@auth0/angular-jwt";
+
 import {
     CanActivate,
     CanActivateChild,
@@ -7,14 +9,14 @@ import {
     UrlTree,
     Router
 } from '@angular/router';
-import {Observable} from 'rxjs';
-import {AppService} from '@services/app.service';
+import { Observable } from 'rxjs';
+import { AppService } from '@services/app.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
-    constructor(private router: Router, private appService: AppService) {}
+    constructor (private router: Router, private appService: AppService) { }
 
     canActivate(
         next: ActivatedRouteSnapshot,
@@ -24,7 +26,21 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         | Promise<boolean | UrlTree>
         | boolean
         | UrlTree {
-        return this.getProfile();
+
+        const token: any = localStorage.getItem("token");
+
+        if (token) {
+            const helper = new JwtHelperService();
+            const isExpired = helper.isTokenExpired(token);
+            if (isExpired) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+
     }
 
     canActivateChild(
@@ -38,16 +54,4 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         return this.canActivate(next, state);
     }
 
-    async getProfile() {
-        if (this.appService.user) {
-            return true;
-        }
-
-        try {
-            await this.appService.getProfile();
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
 }

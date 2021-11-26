@@ -18,10 +18,8 @@ export class AppService {
 
     async loginByAuth({ email, password }) {
         try {
-            const token = await Gatekeeper.loginByAuth(email, password);
-            localStorage.setItem('token', token);
-            await this.getProfile();
-            this.router.navigate(['/']);
+            const url: any = "https://d3b0-125-26-19-112.ngrok.io/login";
+            return await this.http.post(url, { email, password }).toPromise();
         } catch (error) {
             this.toastr.error(error.message);
         }
