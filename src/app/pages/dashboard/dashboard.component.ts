@@ -34,6 +34,7 @@ export class DashboardComponent {
     reportDate: any = "";
 
     options: any;
+    lineOptions: any;
 
     constructor (private covidService: CovidService) {
         var date = `${moment().subtract(1, "day").locale("th").format("dddd D MMM")} ${moment().get("year") + 543}`;
@@ -47,6 +48,7 @@ export class DashboardComponent {
         this.getCovidToday();
 
         this.getChartTarget608();
+        this.createLineChart();
     }
 
 
@@ -162,6 +164,69 @@ export class DashboardComponent {
         } catch (error) {
             console.log(error);
         }
+    }
+
+
+
+    async createLineChart() {
+
+        var res: any = await this.covidService.getChartHistoryPerDay();
+        var chartData: any = res.rows;
+
+        var categories: any = [];
+        var data: any = [];
+
+        chartData.forEach((v: any) => {
+            var thaiDate = `${moment(v.immunization_date).locale('th').format("D MMM")} ${moment(v.immunization_date).get('year') + 543}`;
+            categories.push(thaiDate);
+            data.push(+v.total);
+        });
+
+        this.lineOptions = {
+            chart: {
+                type: 'line',
+            },
+            title: {
+                text: 'การฉีดวัคซีนย้อนหลัง 10 วัน'
+            },
+            tooltip: {
+                crosshairs: true,
+                shared: true
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: false
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'ผลงานการฉีด (Dose)'
+                },
+                labels: {
+                    formatter: function () {
+                        return this.value + ' dose';
+                    }
+                }
+            },
+            xAxis: {
+                categories: categories
+            },
+            series: [
+                {
+                    name: 'Dose',
+                    data: data
+                }
+            ]
+        };
+
+        Highcharts.chart('chart-history', this.lineOptions);
+
     }
 
 }
