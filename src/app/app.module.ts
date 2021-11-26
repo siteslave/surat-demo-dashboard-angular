@@ -34,6 +34,7 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { DropdownMenuComponent } from './components/dropdown/dropdown-menu/dropdown-menu.component';
 import { CovidService } from './services/covid.service';
 import { ChartModule } from 'angular-highcharts';
+import { UserLayoutComponent } from './modules/user-layout/user-layout.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -61,7 +62,8 @@ registerLocaleData(localeEn, 'en-EN');
         SubMenuComponent,
         MenuItemComponent,
         DropdownComponent,
-        DropdownMenuComponent
+        DropdownMenuComponent,
+        UserLayoutComponent
     ],
     imports: [
         BrowserModule,

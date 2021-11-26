@@ -13,6 +13,7 @@ import { RecoverPasswordComponent } from '@modules/recover-password/recover-pass
 import { PrivacyPolicyComponent } from '@modules/privacy-policy/privacy-policy.component';
 import { MainMenuComponent } from '@pages/main-menu/main-menu.component';
 import { SubMenuComponent } from '@pages/main-menu/sub-menu/sub-menu.component';
+import { UserLayoutComponent } from './modules/user-layout/user-layout.component';
 
 const routes: Routes = [
     {
@@ -62,7 +63,16 @@ const routes: Routes = [
         path: 'privacy-policy',
         component: PrivacyPolicyComponent
     },
-    { path: '', redirectTo: 'login', pathMatch: 'full' }
+    {
+        path: 'portal',
+        component: UserLayoutComponent,
+        children: [
+            {
+                path: '', component: DashboardComponent
+            }
+        ]
+    },
+    { path: '', redirectTo: 'portal', pathMatch: 'full' }
 ];
 
 @NgModule({
