@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
             if (res.ok) {
                 localStorage.setItem('token', res.token);
-                this.router.navigate(['/']);
+                this.router.navigateByUrl('/apps');
             } else {
                 this.toastr.error("ไม่สามารถลงทะเบียนได้");
             }

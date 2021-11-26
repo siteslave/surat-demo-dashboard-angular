@@ -3,29 +3,17 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 
 import {
     CanActivate,
-    CanActivateChild,
-    ActivatedRouteSnapshot,
-    RouterStateSnapshot,
-    UrlTree,
     Router
 } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AppService } from '@services/app.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanActivateChild {
-    constructor (private router: Router, private appService: AppService) { }
+export class AuthGuard implements CanActivate {
+    constructor (private router: Router) { }
 
-    canActivate(
-        next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ):
-        | Observable<boolean | UrlTree>
-        | Promise<boolean | UrlTree>
-        | boolean
-        | UrlTree {
+    canActivate() {
 
         const token: any = localStorage.getItem("token");
 
@@ -33,25 +21,16 @@ export class AuthGuard implements CanActivate, CanActivateChild {
             const helper = new JwtHelperService();
             const isExpired = helper.isTokenExpired(token);
             if (isExpired) {
+                this.router.navigateByUrl("/login")
                 return false;
             } else {
                 return true;
             }
         } else {
-            return false;
+            this.router.navigateByUrl("/login")
+            return true;
         }
 
-    }
-
-    canActivateChild(
-        next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ):
-        | Observable<boolean | UrlTree>
-        | Promise<boolean | UrlTree>
-        | boolean
-        | UrlTree {
-        return this.canActivate(next, state);
     }
 
 }

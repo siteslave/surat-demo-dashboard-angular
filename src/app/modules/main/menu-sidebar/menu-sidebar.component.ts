@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {AppService} from '@services/app.service';
+import { Component, OnInit } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AppService } from '@services/app.service';
 
 @Component({
     selector: 'app-menu-sidebar',
@@ -7,13 +8,17 @@ import {AppService} from '@services/app.service';
     styleUrls: ['./menu-sidebar.component.scss']
 })
 export class MenuSidebarComponent implements OnInit {
-    public user;
+    public user: any = {};
     public menu = MENU;
 
-    constructor(public appService: AppService) {}
+    constructor (public appService: AppService) { }
 
     ngOnInit() {
-        this.user = this.appService.user;
+        const helper = new JwtHelperService();
+        const token = localStorage.getItem("token")
+        const decodedToken = helper.decodeToken(token);
+
+        this.user.name = decodedToken.name;
     }
 }
 

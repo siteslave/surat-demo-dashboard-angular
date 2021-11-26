@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {AppService} from '@services/app.service';
-import {DateTime} from 'luxon';
+import { Component, OnInit } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AppService } from '@services/app.service';
+import { DateTime } from 'luxon';
 
 @Component({
     selector: 'app-user',
@@ -8,12 +9,18 @@ import {DateTime} from 'luxon';
     styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
-    public user;
+    public user: any = {};
 
-    constructor(private appService: AppService) {}
+    constructor (private appService: AppService) {
+
+    }
 
     ngOnInit(): void {
-        this.user = this.appService.user;
+        const helper = new JwtHelperService();
+        const token = localStorage.getItem("token")
+        const decodedToken = helper.decodeToken(token);
+
+        this.user.name = decodedToken.name;
     }
 
     logout() {
